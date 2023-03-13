@@ -16,7 +16,7 @@ type EventHandlerInterface interface {
 
 //GERENCIADOR
 type EventDispatcherInterface interface {
-	Register(eventName, string, handler EventHandlerInterface) error //QUANDO ESTE ESTE EVENTO FOR EXECUTADO, EXECUTA O Handler
+	Register(eventName, string, handler EventHandlerInterface) error //MÉTODO REGISTER REGISTRA O EVENTO e PASSA AS OPERAÇÕES
 	Dispatch(event EventInterface) error                             //FAZ COM QUE O EVENTO ACONTEÇA E QUE OS EVENTOS SEJAM EXECUTADOS
 	Remove(eventName string, handler EventHandlerInterface) error    // REMOVER O EVENTO DA LISTA
 	Has(eventName string, handler EventHandlerInterface) bool        //VERIFICA SE O TEM UM EVENTO COM HANDLER ESTÁ REGISTRADO

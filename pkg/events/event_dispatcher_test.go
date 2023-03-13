@@ -68,8 +68,14 @@ func (suite *EventDispatcherTestSuite) TestEventDispatcher_Register() {
 	suite.Nil(err)
 	suite.Equal(2, len(suite.eventDispatcher.handlers[suite.event.GetName()]))
 
+	err = suite.eventDispatcher.Register(suite.event.GetName(), &suite.handler3)
+	suite.Nil(err)
+	suite.Equal(3, len(suite.eventDispatcher.handlers[suite.event.GetName()]))
+
 	assert.Equal(suite.T(), &suite.handler, suite.eventDispatcher.handlers[suite.event.GetName()][0])
 	assert.Equal(suite.T(), &suite.handler2, suite.eventDispatcher.handlers[suite.event.GetName()][1])
+	assert.Equal(suite.T(), &suite.handler3, suite.eventDispatcher.handlers[suite.event.GetName()][2])
+
 }
 
 // teste do erro para não registrar dois handlers iguais
