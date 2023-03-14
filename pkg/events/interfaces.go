@@ -1,20 +1,23 @@
 package events
 
-import "time"
+import (
+	"sync"
+	"time"
+)
 
-//EVENTOS: carrega dados
+// EVENTOS: carrega dados
 type EventInterface interface {
 	GetName() string
 	GetDateName() time.Time
 	GetPayload() interface{} //INTERFACE VAZIA POIS QUALQUER COISA PODE IMPLEMENTAR O PAYLOAD
 }
 
-//OPERAÇÕES QUANDO EVENTO É CHAMADO
+// OPERAÇÕES QUANDO EVENTO É CHAMADO
 type EventHandlerInterface interface {
-	Handler(event EventInterface) //EXECUTA A OPERAÇÃO, POR ISSO PRECISA DO EventInterface
+	Handler(event EventInterface, wg *sync.WaitGroup) //EXECUTA A OPERAÇÃO, POR ISSO PRECISA DO EventInterface
 }
 
-//GERENCIADOR
+// GERENCIADOR
 type EventDispatcherInterface interface {
 	Register(eventName, string, handler EventHandlerInterface) error //MÉTODO REGISTER REGISTRA O EVENTO e PASSA AS OPERAÇÕES
 	Dispatch(event EventInterface) error                             //FAZ COM QUE O EVENTO ACONTEÇA E QUE OS EVENTOS SEJAM EXECUTADOS
