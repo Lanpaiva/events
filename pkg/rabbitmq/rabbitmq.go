@@ -14,9 +14,9 @@ func OpenChannel() (*amqp.Channel, error) {
 	return ch, nil
 }
 
-func Consume(ch *amqp.Channel, out chan<- amqp.Delivery) error {
+func Consume(ch *amqp.Channel, out chan<- amqp.Delivery, queue string) error {
 	msgs, err := ch.Consume(
-		"minhafila",
+		queue,
 		"go-consumer",
 		false,
 		false,
@@ -32,4 +32,21 @@ func Consume(ch *amqp.Channel, out chan<- amqp.Delivery) error {
 	}
 	return nil
 
+}
+
+func Publish(ch *amqp.Channel, body string, exchanges string) error {
+	err := ch.Publish(
+		exchanges,
+		"",
+		false,
+		false,
+		amqp.Publishing{
+			ContentType: "text/plain",
+			Body:        []byte(body),
+		},
+	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
